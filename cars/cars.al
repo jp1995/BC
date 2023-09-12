@@ -4,46 +4,52 @@ table 50110 Cars2
 
     fields
     {
-        field(1; "Auto Nr"; Code[30])
+        field(1; "CarNr"; Code[30])
         {
             DataClassification = ToBeClassified;
             NotBlank = true;
         }
 
-        field(2; Tootja; Text[250])
+        field(2; Manufacturer; Text[250])
         {
             NotBlank = true;
         }
 
-        field(3; "Mudel"; Text[250])
+        field(3; "Make"; Text[250])
         {
             NotBlank = true;
         }
 
-        field(4; "Reg kuu"; Integer)
+        field(4; "RegMonth"; Integer)
         {
             MinValue = 1;
             MaxValue = 12;
             NotBlank = true;
         }
 
-        field(5; "Reg aasta"; Integer)
+        field(5; "RegYear"; Integer)
         {
             MinValue = 1880;
             MaxValue = 2100;
             NotBlank = true;
         }
 
-        field(6; "Läbisõit"; Decimal)
+        field(6; "Mileage"; Decimal)
         {
             MinValue = 0;
             DecimalPlaces = 1;
             NotBlank = true;
         }
+
+        field(7; "Price"; Decimal)
+        {
+            MinValue = 0;
+            NotBlank = true;
+        }
     }
     keys
     {
-        key(PK; "Auto Nr")
+        key(PK; "CarNr")
         {
             Clustered = true;
         }
@@ -65,7 +71,7 @@ page 50106 "Car Card"
         {
             group(Car)
             {
-                field("Auto Nr"; Rec."Auto Nr")
+                field("CarNr"; Rec.CarNr)
                 {
                     // ApplicationArea sets the application area that 
                     // applies to the page field and action controls. 
@@ -73,23 +79,27 @@ page 50106 "Car Card"
                     // will always appear in the user interface.
                     ApplicationArea = All;
                 }
-                field("Tootja"; Rec.Tootja)
+                field("Manufacturer"; Rec.Manufacturer)
                 {
                     ApplicationArea = All;
                 }
-                field("Mudel"; Rec.Mudel)
+                field("Make"; Rec.Make)
                 {
                     ApplicationArea = All;
                 }
-                field("Reg kuu"; Rec."Reg kuu")
+                field("Registration Month"; Rec.RegMonth)
                 {
                     ApplicationArea = All;
                 }
-                field("Reg aasta"; Rec."Reg aasta")
+                field("Registration Year"; Rec.RegYear)
                 {
                     ApplicationArea = All;
                 }
-                field("Läbisõit"; Rec."Läbisõit")
+                field("Mileage"; Rec.Mileage)
+                {
+                    ApplicationArea = All;
+                }
+                field("Price"; Rec.Price)
                 {
                     ApplicationArea = All;
                 }
@@ -111,27 +121,31 @@ page 50107 "Car List"
         {
             repeater(Cars)
             {
-                field("Auto Nr"; Rec."Auto Nr")
+                field("CarNr"; Rec.CarNr)
                 {
                     ApplicationArea = All;
                 }
-                field("Tootja"; Rec.Tootja)
+                field("Manufacturer"; Rec.Manufacturer)
                 {
                     ApplicationArea = All;
                 }
-                field("Mudel"; Rec.Mudel)
+                field("Make"; Rec.Make)
                 {
                     ApplicationArea = All;
                 }
-                field("Reg kuu"; Rec."Reg kuu")
+                field("Registration Month"; Rec.RegMonth)
                 {
                     ApplicationArea = All;
                 }
-                field("Reg aasta"; Rec."Reg aasta")
+                field("Registration Year"; Rec.RegYear)
                 {
                     ApplicationArea = All;
                 }
-                field("Läbisõit"; Rec."Läbisõit")
+                field("Mileage"; Rec.Mileage)
+                {
+                    ApplicationArea = All;
+                }
+                field("Price"; Rec.Price)
                 {
                     ApplicationArea = All;
                 }
@@ -208,8 +222,8 @@ codeunit 50109 AvgAge
 
     procedure CalcAvgAge(var Cars: Record Cars2): Decimal
     begin
-        Cars.CalcSums("Reg aasta");
-        exit(Cars."Reg aasta" / Cars.Count);
+        Cars.CalcSums(RegYear);
+        exit(Cars.RegYear / Cars.Count);
     end;
 
     procedure FormatAvgAge(AvgAge: Decimal): Integer
