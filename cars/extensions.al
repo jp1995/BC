@@ -28,18 +28,19 @@ tableextension 50112 "SalesLineExt" extends "Sales Line"
     }
 
     procedure CheckIfCarExists(NrToCheck: Code[30]): Boolean
+    var
+        SalesLine: Record "Sales Line";
     begin
-        // Rec.Reset(); ?
-        Rec.SetRange(CarNr, NrToCheck);
+        SalesLine.SetLoadFields(CarNr);
+        SalesLine.SetRange(CarNr, NrToCheck);
+        SalesLine.SetFilter(SystemId, '<>%1', Rec.SystemId);
         if Rec.Count > 0 then begin
             exit(true);
         end;
-        exit(false);
     end;
 
     procedure TestProcedure(): Integer
     begin
-        Rec.Reset();
         Rec.SetRange("Unit Price", 5000, 10000);
         Rec.SetRange(Description, '%1', 'ATHENS Desk');
         exit(Rec.Count)
