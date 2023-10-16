@@ -18,7 +18,8 @@ pageextension 50103 CatPicForItem extends "Item Card"
                     ApiUrl := 'https://api.thecatapi.com/v1/images/search';
                     JsonArr := GetJsonFromCatApi(ApiUrl);
                     CatUrl := GetUrlFromJson(JsonArr);
-                    GetPictureFromUrl(CatUrl, Rec);
+                    //GetPictureFromUrl(CatUrl, Rec);
+                    ModifyCurrentPicture(CatUrl, Rec);
                 end;
             }
         }
@@ -71,7 +72,27 @@ pageextension 50103 CatPicForItem extends "Item Card"
         end;
     end;
 
-    procedure GetPictureFromUrl(Url: Text; Item: Record Item) // 
+    // procedure GetPictureFromUrl(Url: Text; Item: Record Item) // 
+    // var
+    //     Client: HttpClient;
+    //     Content: HttpContent;
+    //     Response: HttpResponseMessage;
+    //     InStr: InStream;
+    // begin
+    //     Client.Get(Url, Response);
+    //     if Response.HttpStatusCode = 200 then begin
+    //         Response.Content.ReadAs(InStr);
+    //         Clear(Item.Picture);
+    //         Item.Picture.ImportStream(InStr, 'Random cat picture');
+    //         Item.Modify(true);
+    //     end
+    //     else begin
+    //         Error('Failed to fetch picture.');
+    //     end;
+    // end;
+
+    // Passing instream object between methods, doesn't work, instream object is empty?
+    procedure GetPictureFromUrl(Url: Text): InStream
     var
         Client: HttpClient;
         Content: HttpContent;
@@ -81,21 +102,20 @@ pageextension 50103 CatPicForItem extends "Item Card"
         Client.Get(Url, Response);
         if Response.HttpStatusCode = 200 then begin
             Response.Content.ReadAs(InStr);
-            Clear(Item.Picture);
-            Item.Picture.ImportStream(InStr, 'Random cat picture');
-            Item.Modify(true);
+            exit(InStr)
         end
         else begin
             Error('Failed to fetch picture.');
         end;
     end;
 
-    // Passing instream object between methods, doesn't work, instream object is empty?
-    // procedure GetPictureFromUrl(Url: Text): InStream
-    // begin
-    // end;
-
-    // procedure ModifyCurrentPicture(CatPic: InStream; Item: Record Item)
-    // begin
-    // end;
+    procedure ModifyCurrentPicture(Url: text; Item: Record Item)
+    var
+        CatPic: InStream;
+    begin
+        CatPic := GetPictureFromUrl(Url);
+        Clear(Item.Picture);
+        Item.Picture.ImportStream(CatPic, 'Random cat picture');
+        Item.Modify(true);
+    end;
 }

@@ -1,0 +1,39 @@
+{
+  "id": "b97f03e2-4c2b-42e5-b0c5-4aeafb89831a",
+  "name": "cars_testing",
+  "publisher": "Johan",
+  "version": "1.0.0.0",
+  "brief": "",
+  "description": "",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [ 
+    {
+      "id": "eae3c159-55bf-4761-bc89-b41ee60e68b2",
+      "name": "cars",
+      "publisher": "Johan",
+      "version": "1.0.0.0"
+    }
+  ],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "22.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  },
+  "runtime": "11.0",
+  "features": [
+    "NoImplicitWith"
+  ]
+}
