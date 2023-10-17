@@ -198,7 +198,6 @@ page 50101 "Capital Expenditures Card"
         if isManager then begin
             EditLock := true;
             StatusLock := true;
-            ManagerStatus := StrSubstNo('Current user is a manager with approval limit of %1$', Limit);
         end;
     end;
 
@@ -274,7 +273,6 @@ page 50101 "Capital Expenditures Card"
     var
         EditLock: Boolean;
         StatusLock: Boolean;
-        ManagerStatus: Text;
 
 }
 
