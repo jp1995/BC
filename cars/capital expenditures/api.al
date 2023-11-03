@@ -63,4 +63,11 @@ page 50104 "Capital Expenditures API"
             }
         }
     }
+
+    trigger OnOpenPage()
+    var
+        myInt: Integer;
+    begin
+
+    end;
 }

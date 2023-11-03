@@ -20,7 +20,7 @@ table 50100 "Capital Expenditures"
 
         field(2; Company; Text[250])
         {
-            TableRelation = Company."Display Name";
+            TableRelation = Company."Name";
             ValidateTableRelation = false;
         }
 
@@ -108,7 +108,6 @@ page 50101 "Capital Expenditures Card"
                 field(Company; Rec.Company)
                 {
                     ApplicationArea = All;
-                    Lookup = true;
                 }
                 field(Requester; Rec.Requester)
                 {
@@ -212,6 +211,7 @@ page 50101 "Capital Expenditures Card"
         //Message('Found %1 user', Managers.Count); // Should always be 1
 
         Managers.Next(); // Why?
+
 
         if Managers.Count = 1 then begin
             //Message('Current user %1 is a manager with approval limit of %2$', Managers.User, Managers."Approval Limit");
